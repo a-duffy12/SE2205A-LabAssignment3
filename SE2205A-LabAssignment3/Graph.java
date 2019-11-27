@@ -3,11 +3,14 @@ import java.util.*;
 public class Graph {
 
     private HashMap<Node, LinkedList<Node>> adjacencyMap;
+    
     public Graph() {
+    	
         adjacencyMap = new HashMap<>();
     }
 
     public void addEdgeHelper(Node a, Node b) {
+    	
         LinkedList<Node> tmp = adjacencyMap.get(a);
 
         if (tmp != null) {
@@ -30,7 +33,9 @@ public class Graph {
         addEdgeHelper(destination, source);
         
     }
+    
     public boolean hasEdge(Node source, Node destination) {
+    	
         return adjacencyMap.containsKey(source) && adjacencyMap.get(source).contains(destination);
     }
     
@@ -44,17 +49,82 @@ public class Graph {
     
     void BFS(Node node) {
 
-    	//implement the BFS code
+    	// code to account for the chance that the node in the argument does not exist in the graph
+    	if (node == null)
+    		return;
+    	
+    	// create a queue 
+    	LinkedList<Node> queue = new LinkedList<>(); // use a linked list as the queue
+    	queue.add(node); // add the first node to the queue
+    	
+    	// loop to remove first element in queue while the queue has a first element available to move
+    	while (!queue.isEmpty()) {
+    		
+    		Node curFirst = queue.removeFirst(); // removes the first element in the queue
+    	
+    		// code to handle the event that a visited node is revisited
+    		if (curFirst.isVisited())
+    			continue; // skips to the next available node that has not yet been visited
+    		
+    		// a visited node is marked as such
+    		curFirst.visit();
+    		System.out.print(curFirst.name + " "); // displays the node being visited
+    		
+    		// create a list of all the current node's neighbouring nodes
+    		LinkedList<Node> allNeighbours = adjacencyMap.get(curFirst);
+    		
+    		// check to see if the list of neighboring nodes is empty
+    		if (allNeighbours == null)
+    			continue; // if there are no neighbors, the search continues
+    		
+    		for (Node neighbour : allNeighbours) {
+    			
+    			// add all unvisited neighboring nodes to the queue (list of nodes to visit)
+    			if (!neighbour.isVisited()) {
+    				queue.add(neighbour);
+    			}
+    		}
+    	
+    	}
+    	
+    	System.out.println(); // clears the row for the next node
     }
-    
    
    public void DFS(Node node) {
-     //Implement DFS
+     
+	 // visits the first node, arbitrarily chosen
+	   node.visit();
+	   System.out.print(node.name + " "); // displays the name of the visited node to the console
+	   
+	   // creates a queue using a linked list for all the neighboring nodes of a given node
+	   LinkedList<Node> allNeighbours = adjacencyMap.get(node);
+	   if (allNeighbours == null) 
+		   return; // if there are no neighboring nodes, return up a level, as there are no more possible nodes to visit
+	   
+	   // search through all neighbouring nodes to find one that has not been visited
+	   for (Node neighbour : allNeighbours) {
+		   if (!neighbour.isVisited()) // checks to see if this node has been visited
+			   DFS(neighbour); // recursively check fo
+	   }
 	   
    }
    
    public void printEdges() {
-       //implement printEdges
+       
+	   // runs for every node in the graph
+	   for(Node node : adjacencyMap.keySet()) {
+		   
+		   System.out.print("The " + node.name + " has an edge towards: "); // outputs to the console which node is being looked at
+		   
+		   // runs for all the neighbors of the given node
+		   for (Node neighbor : adjacencyMap.get(node)) {
+			   
+			   System.out.print(neighbor.name + " "); // outputs to the console the nodes connected to the current node in question
+		   }
+		   
+		   System.out.println(); // clears the line for the next node to be displayed
+	   }
 	   
    }
+
 }
