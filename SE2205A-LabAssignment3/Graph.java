@@ -84,7 +84,6 @@ public class Graph {
     				queue.add(neighbour);
     			}
     		}
-    	
     	}
     	
     	System.out.println(); // clears the row for the next node
@@ -104,7 +103,7 @@ public class Graph {
 	   // search through all neighbouring nodes to find one that has not been visited
 	   for (Node neighbour : allNeighbours) {
 		   if (!neighbour.isVisited()) // checks to see if this node has been visited
-			   DFS(neighbour); // recursively check fo
+			   DFS(neighbour); // recursively check the unvisited neighbours
 	   }
 	   
    }
@@ -114,7 +113,7 @@ public class Graph {
 	   // runs for every node in the graph
 	   for(Node node : adjacencyMap.keySet()) {
 		   
-		   System.out.print("The " + node.name + " has an edge towards: "); // outputs to the console which node is being looked at
+		   System.out.print("Node " + node.name + " has an edge towards: "); // outputs to the console which node is being looked at
 		   
 		   // runs for all the neighbors of the given node
 		   for (Node neighbor : adjacencyMap.get(node)) {

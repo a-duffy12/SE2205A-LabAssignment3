@@ -12,7 +12,7 @@ public class Test {
         graph.addEdge(a,d);
         graph.addEdge(a,b);
         graph.addEdge(a,c);
-        graph.addEdge(c,d);
+        graph.addEdge(c,d);   
         graph.printEdges();
         graph.BFS(b);
         graph.resetNodesVisited();
